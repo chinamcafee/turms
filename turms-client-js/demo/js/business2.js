@@ -6,6 +6,7 @@ const ERROR_PREFIX = "error: ";
 
 const clientUserOne = new TurmsClient('ws://localhost:10510', 30 * 1000);
 const clientUserTwo = new TurmsClient('ws://localhost:10510', 30 * 1000);
+const clientUserTwoPC = new TurmsClient('ws://localhost:10510', 30 * 1000);
 
 function appendContainer(element, text, isError) {
     element.value = element.value
@@ -36,9 +37,9 @@ function setupClient(container, client, userId, password, targetId) {
     client.messageService.addMessageListener(message => {
         appendContainer(container, `Message: Receive a message from other users or server: ${beautify(message)}`);
     });
-    client.userService.login(userId, password)
+    client.userService.login(userId, password,"DESKTOP")
         .then(() => {
-            appendContainer(container, `login: User ${userId} has logged in--"BROWSER"`);
+            appendContainer(container, `login: User ${userId} has logged in--"DESKTOP"`);
             client.messageService.queryMessagesWithTotal([1])
                 .then(messages => appendContainer(container, `Offline messages: ${beautify(messages)}`))
                 .catch(error => appendContainer(container, `failed to query offline messages ${beautify(error)}`, true));
